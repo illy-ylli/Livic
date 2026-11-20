@@ -54,3 +54,18 @@ html, body {
   from { transform: scale(1);    }
   to   { transform: scale(1.05); }
 }
+#app {
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+
+#playback {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+#playback p + p {
+  margin-top: 4px;
+}

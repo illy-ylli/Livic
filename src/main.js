@@ -1,5 +1,9 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
+const { startPlayback } = require('./playback');
+
+let playbackSample = { state: 'Connecting to Windows playback' };
+ipcMain.handle('playback:get-sample', () => playbackSample);
 
 function createWindow() {
 const win = new BrowserWindow({
@@ -10,7 +14,9 @@ const win = new BrowserWindow({
   backgroundColor: '#000',
   icon: path.join(__dirname, '..', 'assets', 'icon.ico'),
   webPreferences: {
-    nodeIntegration: true
+    preload: path.join(__dirname, 'preload.js'),
+    contextIsolation: true,
+    nodeIntegration: false
   }
 });
 
@@ -24,6 +30,8 @@ win.once('ready-to-show', () => {                         // ← reveal when rea
 app.whenReady().then(() =>{
   Menu.setApplicationMenu(null);
   createWindow();
+  const stopPlayback = startPlayback((sample) => { playbackSample = sample; });
+  app.once('will-quit', stopPlayback);
 });
 
 app.on('window-all-closed', () => {
