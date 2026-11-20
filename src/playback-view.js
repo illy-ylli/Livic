@@ -2,6 +2,8 @@ const track = document.getElementById('playback-track');
 const state = document.getElementById('playback-state');
 const time = document.getElementById('playback-time');
 
+const lyrics = createLyricsDisplay(document.getElementById('playback-lyrics'));
+
 let sample = {};
 let anchor = 0;
 let receivedAt = 0;
@@ -20,6 +22,7 @@ function renderTime() {
   const elapsed = sample.state === 'Playing' ? (performance.now() - receivedAt) / 1000 : 0;
   const duration = sample.duration > 0 ? sample.duration : Infinity;
   const position = Math.min(duration, Math.max(0, anchor + elapsed));
+  lyrics.render(position);
   time.textContent = Number.isFinite(duration)
     ? formatTime(position) + ' / ' + formatTime(duration)
     : formatTime(position);
@@ -28,6 +31,7 @@ function renderTime() {
 async function refreshPlayback() {
   try {
     sample = await window.playback.getSample();
+    lyrics.setTrack(sample);
     const age = sample.state === 'Playing' && sample.updatedAt > 0
       ? Math.max(0, (Date.now() - sample.updatedAt) / 1000)
       : 0;
@@ -38,6 +42,7 @@ async function refreshPlayback() {
     renderTime();
   } catch (error) {
     sample = {};
+    lyrics.setTrack(sample);
     track.textContent = '';
     state.textContent = 'Windows playback unavailable';
     renderTime();

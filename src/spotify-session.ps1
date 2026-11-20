@@ -28,6 +28,7 @@ while ($true) {
             $sample = @{
                 title = $track.Title
                 artist = $track.Artist
+                album = $track.AlbumTitle
                 state = $session.GetPlaybackInfo().PlaybackStatus.ToString()
                 position = $timeline.Position.TotalSeconds
                 duration = $timeline.EndTime.TotalSeconds

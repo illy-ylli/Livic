@@ -11,6 +11,8 @@ html, body {
 /* Main app */
 #app {
   height: 100vh;
+  background: #fff;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,4 +70,90 @@ html, body {
 
 #playback p + p {
   margin-top: 4px;
+}
+#playback-lyrics {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  transform: scaleY(1.40);
+  filter: blur(0.015em);
+  font-size: clamp(30px, min(8vw, 13vh), 96px);
+  font-weight: 400;
+  line-height: 1.02;
+  max-width: min(24ch, 100%);
+  margin-inline: auto;
+  text-align: left;
+}
+
+#open-lyrics {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+#open-lyrics.return-focus {
+  outline: none;
+}
+
+#open-lyrics img {
+  width: 112px;
+  height: 112px;
+}
+
+.lyrics-view #playback {
+  position: fixed;
+  inset: auto 0 0;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 24px;
+  background: #fff;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.lyrics-view #playback-track {
+  font-weight: 600;
+}
+
+.lyrics-view #playback > p {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.lyrics-view #playback:is(:hover, :focus-visible) > p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lyrics-view #playback > p {
+    transform: none;
+    transition-property: opacity;
+  }
+
+  .lyrics-view #playback:is(:hover, :focus-visible) > p {
+    transform: none;
+  }
+}
+
+.lyrics-view #playback-state {
+  display: none;
+}
+
+#playback-lyrics:focus {
+  outline: none;
+}
+
+.lyric-word {
+  visibility: hidden;
+}
+
+.lyric-word.revealed {
+  visibility: visible;
 }

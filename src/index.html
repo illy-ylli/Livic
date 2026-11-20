@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Livic</title>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -12,15 +13,24 @@
 
     <!-- Main app -->
     <main id="app">
-      <h1>LIVIC</h1>
+      <h1>
+        <button id="open-lyrics" type="button" aria-label="Open lyrics">
+          <img src="../assets/icon.ico" alt="">
+          <span>LIVIC</span>
+        </button>
+      </h1>
       <section id="playback" aria-label="Spotify playback">
         <p id="playback-track"></p>
         <p id="playback-state">Connecting to Windows playback</p>
         <p id="playback-time"></p>
+
       </section>
+      <p id="playback-lyrics" tabindex="-1" hidden></p>
     </main>
 
     <script src="intro.js"></script>
+    <script src="lyrics.js"></script>
+    <script src="lyrics-view.js"></script>
     <script src="playback-view.js"></script>
   </body>
 </html>

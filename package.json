@@ -2,8 +2,8 @@
   "name": "livic",
   "version": "0.0.1",
   "description": "Live synced lyrics on your wallpaper",
-"main": "src/main.js",
-"scripts": {
+  "main": "src/main.js",
+  "scripts": {
     "start": "electron ."
   },
   "devDependencies": {
@@ -13,5 +13,8 @@
     "win": {
       "icon": "icon.ico"
     }
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
   }
 }

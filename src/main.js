@@ -1,9 +1,11 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { startPlayback } = require('./playback');
+const { parseLyricsfile } = require('./lyricsfile');
 
 let playbackSample = { state: 'Connecting to Windows playback' };
 ipcMain.handle('playback:get-sample', () => playbackSample);
+ipcMain.handle('lyrics:parse-lyricsfile', (_event, source) => parseLyricsfile(source));
 
 function createWindow() {
 const win = new BrowserWindow({
@@ -19,6 +21,13 @@ const win = new BrowserWindow({
     nodeIntegration: false
   }
 });
+
+  win.webContents.on('before-input-event', (event, input) => {
+    if (input.type !== 'keyDown' || input.key !== 'F11') return;
+
+    event.preventDefault();
+    if (!input.isAutoRepeat) win.setFullScreen(!win.isFullScreen());
+  });
 
   win.loadFile('src/index.html');
 win.once('ready-to-show', () => {                         // ← reveal when ready
